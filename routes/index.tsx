@@ -16,7 +16,6 @@ export default function Home() {
         <p class="my-6">
           YDNB
         </p>
-<!--         <Counter start={3} /> -->
       </div>
     </>
   );
