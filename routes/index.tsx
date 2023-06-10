@@ -11,7 +11,7 @@ export default function Home() {
         <img
           src="/logo.svg"
           class="w-32 h-32"
-          alt="visionos.day"
+          alt="Daily life with visionOS"
         />
         <p class="my-6">
           YDNB
