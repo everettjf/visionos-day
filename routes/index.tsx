@@ -1,22 +1,34 @@
-import { Head } from "$fresh/runtime.ts";
-import Counter from "../islands/Counter.tsx";
 
-export default function Home() {
+import { Handlers, PageProps } from "$fresh/server.ts";
+import { listPosts, Post } from "../utils/posts.ts";
+import { State } from "../utils/state.ts";
+import { Container } from "../components/Container.tsx";
+import { HomeHeader } from "../components/HomeHeader.tsx";
+import { PostPreview } from "../components/PostPreview.tsx";
+
+interface Data extends State {
+  posts: Post[];
+}
+
+export const handler: Handlers<Data, State> = {
+  async GET(_req, ctx) {
+    const posts = await listPosts();
+    return ctx.render({ ...ctx.state, posts });
+  },
+};
+
+export default function Home(props: PageProps<Data>) {
+  const { posts } = props.data;
   return (
     <>
-      <Head>
-        <title>visionos.day</title>
-      </Head>
-      <div class="p-4 mx-auto max-w-screen-md">
-        <img
-          src="/logo.svg"
-          class="w-32 h-32"
-          alt="Daily life with visionOS"
-        />
-        <p class="my-6">
-          YDNB
-        </p>
-      </div>
+     <HomeHeader />
+     <main>
+      <Container>
+        <ul class="mt-16">
+          {posts.map((post) => <PostPreview post={post} />)}
+        </ul>
+      </Container>
+     </main>
     </>
   );
 }
